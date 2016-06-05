@@ -12,6 +12,7 @@
 		41D7471C1D049DE300AE9B53 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747181D049DE300AE9B53 /* Message.swift */; };
 		41D7471D1D049DE300AE9B53 /* Spoofer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747191D049DE300AE9B53 /* Spoofer.swift */; };
 		41D7471E1D049DE300AE9B53 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D7471A1D049DE300AE9B53 /* Utils.swift */; };
+		41D747231D04A1DC00AE9B53 /* Messages.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747221D04A1DC00AE9B53 /* Messages.proto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		41D747191D049DE300AE9B53 /* Spoofer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spoofer.swift; sourceTree = "<group>"; };
 		41D7471A1D049DE300AE9B53 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		41D7471F1D04A06E00AE9B53 /* protobuf */ = {isa = PBXFileReference; lastKnownFileType = folder; path = protobuf; sourceTree = "<group>"; };
+		41D747201D04A0F600AE9B53 /* Messages.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Messages.proto; sourceTree = "<group>"; };
+		41D747221D04A1DC00AE9B53 /* Messages.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.proto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				41D747171D049DE300AE9B53 /* Constants.swift */,
 				41D747181D049DE300AE9B53 /* Message.swift */,
 				41D7471A1D049DE300AE9B53 /* Utils.swift */,
+				41D747201D04A0F600AE9B53 /* Messages.proto */,
+				41D747221D04A1DC00AE9B53 /* Messages.proto.swift */,
 			);
 			path = polarspoofer;
 			sourceTree = "<group>";
@@ -83,6 +88,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 41D747141D049D5F00AE9B53 /* Build configuration list for PBXNativeTarget "polarspoofer" */;
 			buildPhases = (
+				41D747211D04A17F00AE9B53 /* ShellScript */,
 				41D747091D049D5F00AE9B53 /* Sources */,
 				41D7470A1D049D5F00AE9B53 /* Frameworks */,
 				41D7470B1D049D5F00AE9B53 /* CopyFiles */,
@@ -128,6 +134,22 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		41D747211D04A17F00AE9B53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd polarspoofer && protoc Messages.proto --swift_out=./";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		41D747091D049D5F00AE9B53 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -138,6 +160,7 @@
 				41D747111D049D5F00AE9B53 /* main.swift in Sources */,
 				41D7471D1D049DE300AE9B53 /* Spoofer.swift in Sources */,
 				41D7471B1D049DE300AE9B53 /* Constants.swift in Sources */,
+				41D747231D04A1DC00AE9B53 /* Messages.proto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

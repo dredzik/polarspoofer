@@ -1,0 +1,10 @@
+message Request {
+    enum Type {
+        READ = 0;
+        WRITE = 1;
+        DELETE = 3;
+    }
+
+    optional Type type = 1;
+    optional string path = 2;
+}
