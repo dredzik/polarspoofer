@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410F6B081D04A54C00535A1D /* AbstractMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AF81D04A54C00535A1D /* AbstractMessage.swift */; };
+		410F6B091D04A54C00535A1D /* CodedInputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AF91D04A54C00535A1D /* CodedInputStream.swift */; };
+		410F6B0A1D04A54C00535A1D /* CodedOutputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AFA1D04A54C00535A1D /* CodedOutputStream.swift */; };
+		410F6B0B1D04A54C00535A1D /* ConcreateExtensionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AFB1D04A54C00535A1D /* ConcreateExtensionField.swift */; };
+		410F6B0C1D04A54C00535A1D /* ExtendableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AFD1D04A54C00535A1D /* ExtendableMessage.swift */; };
+		410F6B0D1D04A54C00535A1D /* ExtensionRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AFE1D04A54C00535A1D /* ExtensionRegistry.swift */; };
+		410F6B0E1D04A54C00535A1D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6AFF1D04A54C00535A1D /* Field.swift */; };
+		410F6B0F1D04A54C00535A1D /* GeneratedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B001D04A54C00535A1D /* GeneratedMessage.swift */; };
+		410F6B101D04A54C00535A1D /* Google.Protobuf.Descriptor.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B011D04A54C00535A1D /* Google.Protobuf.Descriptor.proto.swift */; };
+		410F6B111D04A54C00535A1D /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B021D04A54C00535A1D /* Google.Protobuf.SwiftDescriptor.proto.swift */; };
+		410F6B121D04A54C00535A1D /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B041D04A54C00535A1D /* RingBuffer.swift */; };
+		410F6B131D04A54C00535A1D /* UnknownFieldSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B061D04A54C00535A1D /* UnknownFieldSet.swift */; };
+		410F6B141D04A54C00535A1D /* WireFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B071D04A54C00535A1D /* WireFormat.swift */; };
 		41D747111D049D5F00AE9B53 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747101D049D5F00AE9B53 /* main.swift */; };
 		41D7471B1D049DE300AE9B53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747171D049DE300AE9B53 /* Constants.swift */; };
 		41D7471C1D049DE300AE9B53 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747181D049DE300AE9B53 /* Message.swift */; };
@@ -28,13 +41,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		410F6AF81D04A54C00535A1D /* AbstractMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractMessage.swift; path = protobuf/AbstractMessage.swift; sourceTree = "<group>"; };
+		410F6AF91D04A54C00535A1D /* CodedInputStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodedInputStream.swift; path = protobuf/CodedInputStream.swift; sourceTree = "<group>"; };
+		410F6AFA1D04A54C00535A1D /* CodedOutputStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodedOutputStream.swift; path = protobuf/CodedOutputStream.swift; sourceTree = "<group>"; };
+		410F6AFB1D04A54C00535A1D /* ConcreateExtensionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConcreateExtensionField.swift; path = protobuf/ConcreateExtensionField.swift; sourceTree = "<group>"; };
+		410F6AFC1D04A54C00535A1D /* descriptor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = descriptor.proto; path = protobuf/descriptor.proto; sourceTree = "<group>"; };
+		410F6AFD1D04A54C00535A1D /* ExtendableMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtendableMessage.swift; path = protobuf/ExtendableMessage.swift; sourceTree = "<group>"; };
+		410F6AFE1D04A54C00535A1D /* ExtensionRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionRegistry.swift; path = protobuf/ExtensionRegistry.swift; sourceTree = "<group>"; };
+		410F6AFF1D04A54C00535A1D /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Field.swift; path = protobuf/Field.swift; sourceTree = "<group>"; };
+		410F6B001D04A54C00535A1D /* GeneratedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneratedMessage.swift; path = protobuf/GeneratedMessage.swift; sourceTree = "<group>"; };
+		410F6B011D04A54C00535A1D /* Google.Protobuf.Descriptor.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Google.Protobuf.Descriptor.proto.swift; path = protobuf/Google.Protobuf.Descriptor.proto.swift; sourceTree = "<group>"; };
+		410F6B021D04A54C00535A1D /* Google.Protobuf.SwiftDescriptor.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Google.Protobuf.SwiftDescriptor.proto.swift; path = protobuf/Google.Protobuf.SwiftDescriptor.proto.swift; sourceTree = "<group>"; };
+		410F6B031D04A54C00535A1D /* ProtocolBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtocolBuffers.h; path = protobuf/ProtocolBuffers.h; sourceTree = "<group>"; };
+		410F6B041D04A54C00535A1D /* RingBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RingBuffer.swift; path = protobuf/RingBuffer.swift; sourceTree = "<group>"; };
+		410F6B051D04A54C00535A1D /* swift-descriptor.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "swift-descriptor.proto"; path = "protobuf/swift-descriptor.proto"; sourceTree = "<group>"; };
+		410F6B061D04A54C00535A1D /* UnknownFieldSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnknownFieldSet.swift; path = protobuf/UnknownFieldSet.swift; sourceTree = "<group>"; };
+		410F6B071D04A54C00535A1D /* WireFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireFormat.swift; path = protobuf/WireFormat.swift; sourceTree = "<group>"; };
 		41D7470D1D049D5F00AE9B53 /* polarspoofer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = polarspoofer; sourceTree = BUILT_PRODUCTS_DIR; };
 		41D747101D049D5F00AE9B53 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		41D747171D049DE300AE9B53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		41D747181D049DE300AE9B53 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		41D747191D049DE300AE9B53 /* Spoofer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spoofer.swift; sourceTree = "<group>"; };
 		41D7471A1D049DE300AE9B53 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		41D7471F1D04A06E00AE9B53 /* protobuf */ = {isa = PBXFileReference; lastKnownFileType = folder; path = protobuf; sourceTree = "<group>"; };
 		41D747201D04A0F600AE9B53 /* Messages.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Messages.proto; sourceTree = "<group>"; };
 		41D747221D04A1DC00AE9B53 /* Messages.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.proto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,6 +78,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		410F6AF71D04A53E00535A1D /* protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				410F6AF81D04A54C00535A1D /* AbstractMessage.swift */,
+				410F6AF91D04A54C00535A1D /* CodedInputStream.swift */,
+				410F6AFA1D04A54C00535A1D /* CodedOutputStream.swift */,
+				410F6AFB1D04A54C00535A1D /* ConcreateExtensionField.swift */,
+				410F6AFC1D04A54C00535A1D /* descriptor.proto */,
+				410F6AFD1D04A54C00535A1D /* ExtendableMessage.swift */,
+				410F6AFE1D04A54C00535A1D /* ExtensionRegistry.swift */,
+				410F6AFF1D04A54C00535A1D /* Field.swift */,
+				410F6B001D04A54C00535A1D /* GeneratedMessage.swift */,
+				410F6B011D04A54C00535A1D /* Google.Protobuf.Descriptor.proto.swift */,
+				410F6B021D04A54C00535A1D /* Google.Protobuf.SwiftDescriptor.proto.swift */,
+				410F6B031D04A54C00535A1D /* ProtocolBuffers.h */,
+				410F6B041D04A54C00535A1D /* RingBuffer.swift */,
+				410F6B051D04A54C00535A1D /* swift-descriptor.proto */,
+				410F6B061D04A54C00535A1D /* UnknownFieldSet.swift */,
+				410F6B071D04A54C00535A1D /* WireFormat.swift */,
+			);
+			name = protobuf;
+			sourceTree = "<group>";
+		};
 		41D747041D049D5F00AE9B53 = {
 			isa = PBXGroup;
 			children = (
@@ -69,7 +120,7 @@
 		41D7470F1D049D5F00AE9B53 /* polarspoofer */ = {
 			isa = PBXGroup;
 			children = (
-				41D7471F1D04A06E00AE9B53 /* protobuf */,
+				410F6AF71D04A53E00535A1D /* protobuf */,
 				41D747101D049D5F00AE9B53 /* main.swift */,
 				41D747191D049DE300AE9B53 /* Spoofer.swift */,
 				41D747171D049DE300AE9B53 /* Constants.swift */,
@@ -155,12 +206,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				410F6B0C1D04A54C00535A1D /* ExtendableMessage.swift in Sources */,
+				410F6B0A1D04A54C00535A1D /* CodedOutputStream.swift in Sources */,
+				410F6B121D04A54C00535A1D /* RingBuffer.swift in Sources */,
 				41D7471E1D049DE300AE9B53 /* Utils.swift in Sources */,
 				41D7471C1D049DE300AE9B53 /* Message.swift in Sources */,
+				410F6B0D1D04A54C00535A1D /* ExtensionRegistry.swift in Sources */,
+				410F6B0B1D04A54C00535A1D /* ConcreateExtensionField.swift in Sources */,
 				41D747111D049D5F00AE9B53 /* main.swift in Sources */,
+				410F6B0E1D04A54C00535A1D /* Field.swift in Sources */,
 				41D7471D1D049DE300AE9B53 /* Spoofer.swift in Sources */,
+				410F6B091D04A54C00535A1D /* CodedInputStream.swift in Sources */,
+				410F6B081D04A54C00535A1D /* AbstractMessage.swift in Sources */,
+				410F6B0F1D04A54C00535A1D /* GeneratedMessage.swift in Sources */,
+				410F6B141D04A54C00535A1D /* WireFormat.swift in Sources */,
 				41D7471B1D049DE300AE9B53 /* Constants.swift in Sources */,
 				41D747231D04A1DC00AE9B53 /* Messages.proto.swift in Sources */,
+				410F6B111D04A54C00535A1D /* Google.Protobuf.SwiftDescriptor.proto.swift in Sources */,
+				410F6B131D04A54C00535A1D /* UnknownFieldSet.swift in Sources */,
+				410F6B101D04A54C00535A1D /* Google.Protobuf.Descriptor.proto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +346,7 @@
 				41D747161D049D5F00AE9B53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
