@@ -115,8 +115,13 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         let path = BackupRoot + request.path
         print(SUCC, "recvm", MessageType.Request, request.types, path)
 
-        let data = NSData(contentsOfFile: path)!
-        let response = d2a(data)
+        var response : [UInt8]
+        
+        if path.hasSuffix("/") {
+            response = readDirectory(path)
+        } else {
+            response = readFile(path)
+        }
         
         sendm(encode(response))
     }
