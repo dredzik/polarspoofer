@@ -33,6 +33,7 @@
 		41D747181D049DE300AE9B53 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		41D747191D049DE300AE9B53 /* Spoofer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spoofer.swift; sourceTree = "<group>"; };
 		41D7471A1D049DE300AE9B53 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		41D7471F1D04A06E00AE9B53 /* protobuf */ = {isa = PBXFileReference; lastKnownFileType = folder; path = protobuf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +66,7 @@
 		41D7470F1D049D5F00AE9B53 /* polarspoofer */ = {
 			isa = PBXGroup;
 			children = (
+				41D7471F1D04A06E00AE9B53 /* protobuf */,
 				41D747101D049D5F00AE9B53 /* main.swift */,
 				41D747191D049DE300AE9B53 /* Spoofer.swift */,
 				41D747171D049DE300AE9B53 /* Constants.swift */,
