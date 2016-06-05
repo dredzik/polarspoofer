@@ -90,6 +90,8 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         } else if type == .Continue {
             print(SUCC, "recvm", type)
             sendp16()
+        } else if type == .Something {
+            print(SUCC, "recvm", type)
         } else {
             print(FAIL, "recvm", type, hex(message))
         }

@@ -15,13 +15,14 @@ public enum MessageType {
     case Request
     case Response
     case Unknown
+    case Something
     
     public static func type(message: [UInt8]) -> MessageType {
         if message.elementsEqual([0x0f, 0x00]) {
             return .Control
         }
-
-        if message.elementsEqual([0x09, 0x00]) {
+        
+        if message[0] == 0x09 {
             return .Continue
         }
 
