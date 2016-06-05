@@ -87,6 +87,9 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             recvNotification(message)
         } else if type == .Request {
             recvRequest(message)
+        } else if type == .Continue {
+            print(SUCC, "recvm", type)
+            sendp16()
         } else {
             print(FAIL, "recvm", type, hex(message))
         }
@@ -118,14 +121,27 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         sendm(encode(response))
     }
     
+    var packets = [[UInt8]]()
+
     public func sendm(message: [UInt8]) {
-        print(SUCC, "sendm", MessageType.type(message))
         var remains = message
+        packets.removeAll()
         
         while remains.count > 0 {
             let s = remains.count > 20 ? 20 : remains.count
-            sendp([] + remains[0...s-1])
+            packets.append([] + remains[0...s-1])
             remains.removeFirst(s)
+        }
+        
+        sendp16()
+    }
+    
+    public func sendp16() {
+        print(SUCC, "sendp16", MessageType.type(packets[0]))
+        let count = packets.count > 16 ? 16 : packets.count
+        
+        for _ in 0..<count {
+            sendp(packets.removeFirst())
         }
     }
     

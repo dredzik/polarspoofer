@@ -10,6 +10,7 @@ import Foundation
 
 public enum MessageType {
     case Control
+    case Continue
     case Notification
     case Request
     case Response
@@ -19,7 +20,11 @@ public enum MessageType {
         if message.elementsEqual([0x0f, 0x00]) {
             return .Control
         }
-        
+
+        if message.elementsEqual([0x0d, 0x00]) {
+            return .Continue
+        }
+
         if message.count > 4 && message[3] == 0x80 {
             return .Notification
         }
