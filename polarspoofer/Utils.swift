@@ -33,7 +33,23 @@ func readFile(path: String) -> [UInt8] {
 }
 
 func readDirectory(path: String) -> [UInt8] {
-    return [UInt8]()
+    let manager = NSFileManager.defaultManager()
+    var entries = Array<Directory.Entry>()
+    
+    for file in try! manager.contentsOfDirectoryAtPath(path) {
+        let attr = try! manager.attributesOfItemAtPath(path + file)
+        let type = attr[NSFileType]! as! String
+        let size = attr[NSFileSize]! as! Int
+        var name = file
+        
+        if type == NSFileTypeDirectory {
+            name += "/"
+        }
+        
+        entries.append(try! Directory.Entry.Builder().setPath(name).setSize(UInt32(size)).build())
+    }
+    
+    return d2a(try! Directory.Builder().setEntries(entries).build().data())
 }
 
 func decode(message: [UInt8]) -> [UInt8] {

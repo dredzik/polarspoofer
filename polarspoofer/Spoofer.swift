@@ -142,6 +142,11 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
     
     public func sendp16() {
+        if (packets.count == 0) {
+            print(FAIL, "sendp16")
+            return
+        }
+        
         print(SUCC, "sendp16", MessageType.type(packets[0]))
         let count = packets.count > 16 ? 16 : packets.count
         
@@ -151,6 +156,7 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
     
     public func sendp(packet: [UInt8]) {
+        print(SUCC, "sendp", hex(packet))
         p!.writeValue(a2d(packet), forCharacteristic: c!, type: .WithoutResponse)
     }
 }

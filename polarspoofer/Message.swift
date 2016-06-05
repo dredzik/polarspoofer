@@ -21,7 +21,7 @@ public enum MessageType {
             return .Control
         }
 
-        if message.elementsEqual([0x0d, 0x00]) {
+        if message.elementsEqual([0x09, 0x00]) {
             return .Continue
         }
 
