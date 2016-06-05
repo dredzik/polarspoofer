@@ -45,3 +45,47 @@ func decode(message: [UInt8]) -> [UInt8] {
     var i = 0, j = 0
     return [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 300 > 2 }.dropLast()
 }
+
+func encode(message: [UInt8]) -> [UInt8] {
+    let zeroed = message + [0x00]
+    let parts = encodeParts(zeroed)
+    var result = [UInt8]()
+
+    for part in parts {
+        for packet in encodePackets(part, last: parts.last! == part) {
+            result += packet
+        }
+    }
+
+    return result
+}
+
+func encodeParts(message: [UInt8]) -> [[UInt8]] {
+    var result = [[UInt8]]()
+    var left = message
+
+    while left.count > 0 {
+        let remove = left.count > 301 ? 301 : left.count
+        result.append([0x00, 0x00, 0x00] + left[0...remove-1])
+        left.removeFirst(remove)
+    }
+
+    return result
+}
+
+func encodePackets(part: [UInt8], last: Bool) -> [[UInt8]] {
+    var result = [[UInt8]]()
+    var left = part
+
+    var packet : UInt8 = 0
+    let packets = UInt8(ceil(Double(part.count) / 19.0))
+
+    while left.count > 0 {
+        let remove = left.count > 19 ? 19 : left.count
+        let header : UInt8 = (packets - ++packet) << 4 + (!last || left.count > 19 ? 9 : 0)
+        result.append([header] + left[0...remove-1])
+        left.removeFirst(remove)
+    }
+
+    return result
+}
