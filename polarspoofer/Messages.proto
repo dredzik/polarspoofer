@@ -1,3 +1,6 @@
+import "protobuf/swift-descriptor.proto";
+option (.google.protobuf.swift_file_options).compile_for_framework = false;
+
 message Request {
     enum Type {
         READ = 0;
