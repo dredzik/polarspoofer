@@ -75,11 +75,11 @@ func unknownDate() -> DateTime {
 
 func decode(message: [UInt8]) -> [UInt8] {
     var i = 0, j = 0
-    return [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 300 > 2 }.dropLast()
+    return [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 300 != 0 }.dropFirst(2).dropLast()
 }
 
 func encode(message: [UInt8]) -> [UInt8] {
-    let zeroed = message + [0x00]
+    let zeroed = [0x00, 0x00] + message + [0x00]
     let parts = encodeParts(zeroed)
     var result = [UInt8]()
     
@@ -93,13 +93,15 @@ func encode(message: [UInt8]) -> [UInt8] {
 }
 
 func encodeParts(message: [UInt8]) -> [[UInt8]] {
+    var count = UInt8(0)
     var result = [[UInt8]]()
     var left = message
     
     while left.count > 0 {
-        let remove = left.count > 301 ? 301 : left.count
-        result.append([0x00, 0x00, 0x00] + left[0...remove-1])
+        let remove = left.count > 303 ? 303 : left.count
+        result.append([count] + left[0...remove-1])
         left.removeFirst(remove)
+        count += 1
     }
     
     return result
@@ -114,7 +116,8 @@ func encodePackets(part: [UInt8], last: Bool) -> [[UInt8]] {
     
     while left.count > 0 {
         let remove = left.count > 19 ? 19 : left.count
-        let header : UInt8 = (packets - ++packet) << 4 + (!last || left.count > 19 ? 9 : 0)
+        packet += 1
+        let header : UInt8 = (packets - packet) << 4 + (!last || left.count > 19 ? 9 : 0)
         result.append([header] + left[0...remove-1])
         left.removeFirst(remove)
     }

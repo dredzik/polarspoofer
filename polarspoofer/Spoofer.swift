@@ -72,6 +72,8 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     var message = [UInt8]()
     
     public func recvp(value: NSData) {
+        print(SUCC, "recvp", hex(d2a(value)))
+        
         let packet = d2a(value)
         message += packet
         
@@ -90,8 +92,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         } else if type == .Continue {
             print(SUCC, "recvm", type)
             sendp16()
-        } else if type == .Something {
-            print(SUCC, "recvm", type)
         } else {
             print(FAIL, "recvm", type, hex(message))
         }
