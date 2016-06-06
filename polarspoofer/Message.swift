@@ -30,7 +30,7 @@ public enum MessageType {
         }
         
         if message.count > 4 && message[3] == 0x00 {
-            return message[0] & 0x01 == 0x01 ? .Response : .Request
+            return .Request
         }
         
         return .Unknown

@@ -72,8 +72,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     var message = [UInt8]()
     
     public func recvp(value: NSData) {
-        print(SUCC, "recvp", hex(d2a(value)))
-        
         let packet = d2a(value)
         message += packet
         
@@ -149,7 +147,7 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             return
         }
         
-        print(SUCC, "sendp16", MessageType.type(packets[0]))
+        print(SUCC, "sendp16")
         let count = packets.count > 16 ? 16 : packets.count
         
         for _ in 0..<count {
@@ -158,8 +156,13 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
     
     public func sendp(packet: [UInt8]) {
-        print(SUCC, "sendp", hex(packet))
-        p!.writeValue(a2d(packet), forCharacteristic: c!, type: .WithoutResponse)
+        var tmp = packet
+        
+        if packet.elementsEqual([0x00,0x00,0x00,0x00,0x00,]) {
+            tmp = [0x08,0x00,0x00,0x00,0x00,]
+        }
+        
+        p!.writeValue(a2d(tmp), forCharacteristic: c!, type: .WithoutResponse)
     }
 }
 
