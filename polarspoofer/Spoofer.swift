@@ -88,8 +88,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         recvca.append(chunk)
         
         if (chunk.more) {
-            print(SUCC, "recvc", chunk.type)
-            print(SUCC, "sendr")
             sendr([0x09, chunk.number])
         } else {
             recvm(recvca)
@@ -111,7 +109,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         }
         
         if message.type == .Continue {
-            print(SUCC, "recvm", message.type)
             sendc()
             return
         }
@@ -149,6 +146,8 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
                 }
                 
                 sendm(response)
+            } else if request.types == .Write {
+                sendr([0x09, 0x00])
             }
             
             return
@@ -163,7 +162,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
     
     public func sendc() {
-        print(SUCC, "sendc")
         let chunk = sendca.removeFirst()
         
         for packet in PSChunk.encode(chunk) {
