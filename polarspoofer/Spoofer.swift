@@ -65,106 +65,148 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     
     public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         if let value = characteristic.value {
-            recvp(value)
+            recvp(d2a(value))
         }
     }
+
+    var recvpa = [PSPacket]()
+    var recvca = [PSChunk]()
+    var sendca = [PSChunk]()
     
-    var message = [UInt8]()
-    
-    public func recvp(value: NSData) {
-        let packet = d2a(value)
-        message += packet
+    public func recvp(value: [UInt8]) {
+        let packet = PSPacket.decode(value)
+        recvpa.append(packet)
         
-        if packet[0] >> 4 == 0 {
-            recvm(message)
-            message.removeAll()
+        if (packet.sequence == 0) {
+            recvc(recvpa)
+            recvpa.removeAll()
         }
     }
     
-    public func recvm(message: [UInt8]) {
-        let type = MessageType.type(message)
-        if type == .Notification {
-            recvNotification(message)
-        } else if type == .Request {
-            recvRequest(message)
-        } else if type == .Continue {
-            print(SUCC, "recvm", type)
-            sendp16()
+    public func recvc(packets: [PSPacket]) {
+        let chunk = PSChunk.decode(packets)
+        recvca.append(chunk)
+        
+        if (chunk.more) {
+            print(SUCC, "recvc", chunk.type)
+            print(SUCC, "sendr")
+            sendr([0x09, chunk.number])
         } else {
-            print(FAIL, "recvm", type, hex20(message))
-            if message.count > 4 && message[0] & 0x08 == 0x08 {
-                print(SUCC, "sendp", MessageType.Continue)
-                sendp([0x09, message[1]])
-            }
+            recvm(recvca)
+            recvca.removeAll()
         }
     }
     
-    public func recvNotification(message: [UInt8]) {
-        let type = NotificationType.type(message)
+    public func recvm(chunks: [PSChunk]) {
+        let message = PSMessage.decode(chunks)
 
-        print(SUCC, "recvm", MessageType.Notification, type)
-        
-        if message.startsWith([0x18, 0x00, 0x01, 0x80]) || message.startsWith([0x18, 0x00, 0x03, 0x80]) {
-            var response : [UInt8] = [0x19, 0x00, 0x00, 0x00]
-            response += message[4...message.count-1]
-            response += [0x00]
-            response[20] = 0x08
-            sendm(response)
-        }
-    }
-    
-    public func recvRequest(message: [UInt8]) {
-        let decoded = decode(message)
-        let request = try! Request.parseFromData(a2d(decoded))
-        let path = BackupRoot + request.path
-        print(SUCC, "recvm", MessageType.Request, request.types, path)
-
-        var response : [UInt8]
-        
-        if request.types == .Read {
-            if path.hasSuffix("/") {
-                response = readDirectory(path)
-            } else {
-                response = readFile(path)
-            }
-        
-            sendm(encode(response))
-        } else if request.types == .Write {
-            print(SUCC, "sendp", MessageType.Continue)
-            sendp([0x09, 0x00])
-        }
-    }
-    
-    var packets = [[UInt8]]()
-
-    public func sendm(message: [UInt8]) {
-        var remains = message
-        packets.removeAll()
-        
-        while remains.count > 0 {
-            let s = remains.count > 20 ? 20 : remains.count
-            packets.append([] + remains[0...s-1])
-            remains.removeFirst(s)
-        }
-        
-        sendp16()
-    }
-    
-    public func sendp16() {
-        if (packets.count == 0) {
-            print(FAIL, "sendp16")
+        if message.type == .Control {
+            print(SUCC, "recvm", message.type)
             return
         }
         
-        let count = packets.count > 16 ? 16 : packets.count
+        if message.type == .Error {
+            print(FAIL, "recvm", message.type)
+            return
+        }
         
-        for _ in 0..<count {
-            sendp(packets.removeFirst())
+        if message.type == .Continue {
+            print(SUCC, "recvm", message.type)
+            sendc()
+            return
+        }
+        
+        if message.subtype == .Notification {
+            print(SUCC, "recvm", message.type, message.subtype, hex(message.header), hex(message.payload))
+            return
+        }
+        
+        if message.subtype == .Query {
+            print(SUCC, "recvm", message.type, message.subtype, hex(message.header))
+            let response = PSMessage()
+
+            response.payload = message.payload + [0x00]
+
+            sendm(response)
+            return
+        }
+        
+        if message.subtype == .Data {
+            let length = Int(message.header[0])
+            let data = Array(message.payload[0...length-1])
+            let request = try! Request.parseFromData(a2d(data))
+            let path = BackupRoot + request.path
+            
+            print(SUCC, "recvm", message.type, message.subtype, request.types, path)
+            
+            if request.types == .Read {
+                let response = PSMessage()
+
+                if path.hasSuffix("/") {
+                    response.payload = readDirectory(path) + [0x00]
+                } else {
+                    response.payload = readFile(path) + [0x00]
+                }
+                
+                sendm(response)
+            }
+            
+            return
+        }
+
+        print(FAIL, "recvm", message.type, message.subtype, hex(message.header), hex(message.payload))
+    }
+    
+    public func sendm(message: PSMessage) {
+        sendca = PSMessage.encode(message)
+        sendc()
+    }
+    
+    public func sendc() {
+        print(SUCC, "sendc")
+        let chunk = sendca.removeFirst()
+        
+        for packet in PSChunk.encode(chunk) {
+            sendp(packet)
         }
     }
     
-    public func sendp(packet: [UInt8]) {
-        p!.writeValue(a2d(packet), forCharacteristic: c!, type: .WithoutResponse)
+    public func sendp(packet: PSPacket) {
+        sendr(PSPacket.encode(packet))
     }
+    
+    public func sendr(raw: [UInt8]) {
+        p!.writeValue(a2d(raw), forCharacteristic: c!, type: .WithoutResponse)
+    }
+    
+//    public func recvm(message: [UInt8]) {
+//            print(FAIL, "recvm", type, hex20(message))
+//            if message.count > 4 && message[0] & 0x08 == 0x08 {
+//                print(SUCC, "sendp", MessageType.Continue)
+//                sendp([0x09, message[1]])
+//            }
+//    }
+//    
+//    public func recvRequest(message: [UInt8]) {
+//        let decoded = decode(message)
+//        let request = try! Request.parseFromData(a2d(decoded))
+//        let path = BackupRoot + request.path
+//        print(SUCC, "recvm", MessageType.Request, request.types, path)
+//
+//        var response : [UInt8]
+//        
+//        if request.types == .Read {
+//            if path.hasSuffix("/") {
+//                response = readDirectory(path)
+//            } else {
+//                response = readFile(path)
+//            }
+//        
+//            sendm(encode(response))
+//        } else if request.types == .Write {
+//            print(SUCC, "sendp", MessageType.Continue)
+//            sendp([0x09, 0x00])
+//        }
+//    }
 }
 

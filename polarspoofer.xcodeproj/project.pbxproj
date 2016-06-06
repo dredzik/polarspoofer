@@ -22,10 +22,12 @@
 		410F6B141D04A54C00535A1D /* WireFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F6B071D04A54C00535A1D /* WireFormat.swift */; };
 		41D747111D049D5F00AE9B53 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747101D049D5F00AE9B53 /* main.swift */; };
 		41D7471B1D049DE300AE9B53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747171D049DE300AE9B53 /* Constants.swift */; };
-		41D7471C1D049DE300AE9B53 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747181D049DE300AE9B53 /* Message.swift */; };
+		41D7471C1D049DE300AE9B53 /* PSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747181D049DE300AE9B53 /* PSMessage.swift */; };
 		41D7471D1D049DE300AE9B53 /* Spoofer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747191D049DE300AE9B53 /* Spoofer.swift */; };
 		41D7471E1D049DE300AE9B53 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D7471A1D049DE300AE9B53 /* Utils.swift */; };
 		41D747231D04A1DC00AE9B53 /* Messages.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D747221D04A1DC00AE9B53 /* Messages.proto.swift */; };
+		88BC599B1D05A0DE00BB73B2 /* PSPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BC599A1D05A0DE00BB73B2 /* PSPacket.swift */; };
+		88BC599D1D05A91200BB73B2 /* PSChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BC599C1D05A91200BB73B2 /* PSChunk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,11 +62,13 @@
 		41D7470D1D049D5F00AE9B53 /* polarspoofer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = polarspoofer; sourceTree = BUILT_PRODUCTS_DIR; };
 		41D747101D049D5F00AE9B53 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		41D747171D049DE300AE9B53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		41D747181D049DE300AE9B53 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		41D747181D049DE300AE9B53 /* PSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSMessage.swift; sourceTree = "<group>"; };
 		41D747191D049DE300AE9B53 /* Spoofer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spoofer.swift; sourceTree = "<group>"; };
 		41D7471A1D049DE300AE9B53 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		41D747201D04A0F600AE9B53 /* Messages.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Messages.proto; sourceTree = "<group>"; };
 		41D747221D04A1DC00AE9B53 /* Messages.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.proto.swift; sourceTree = "<group>"; };
+		88BC599A1D05A0DE00BB73B2 /* PSPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSPacket.swift; sourceTree = "<group>"; };
+		88BC599C1D05A91200BB73B2 /* PSChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSChunk.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +128,9 @@
 				41D747101D049D5F00AE9B53 /* main.swift */,
 				41D747191D049DE300AE9B53 /* Spoofer.swift */,
 				41D747171D049DE300AE9B53 /* Constants.swift */,
-				41D747181D049DE300AE9B53 /* Message.swift */,
+				41D747181D049DE300AE9B53 /* PSMessage.swift */,
+				88BC599C1D05A91200BB73B2 /* PSChunk.swift */,
+				88BC599A1D05A0DE00BB73B2 /* PSPacket.swift */,
 				41D7471A1D049DE300AE9B53 /* Utils.swift */,
 				41D747201D04A0F600AE9B53 /* Messages.proto */,
 				41D747221D04A1DC00AE9B53 /* Messages.proto.swift */,
@@ -210,15 +216,17 @@
 				410F6B0A1D04A54C00535A1D /* CodedOutputStream.swift in Sources */,
 				410F6B121D04A54C00535A1D /* RingBuffer.swift in Sources */,
 				41D7471E1D049DE300AE9B53 /* Utils.swift in Sources */,
-				41D7471C1D049DE300AE9B53 /* Message.swift in Sources */,
+				41D7471C1D049DE300AE9B53 /* PSMessage.swift in Sources */,
 				410F6B0D1D04A54C00535A1D /* ExtensionRegistry.swift in Sources */,
 				410F6B0B1D04A54C00535A1D /* ConcreateExtensionField.swift in Sources */,
+				88BC599B1D05A0DE00BB73B2 /* PSPacket.swift in Sources */,
 				41D747111D049D5F00AE9B53 /* main.swift in Sources */,
 				410F6B0E1D04A54C00535A1D /* Field.swift in Sources */,
 				41D7471D1D049DE300AE9B53 /* Spoofer.swift in Sources */,
 				410F6B091D04A54C00535A1D /* CodedInputStream.swift in Sources */,
 				410F6B081D04A54C00535A1D /* AbstractMessage.swift in Sources */,
 				410F6B0F1D04A54C00535A1D /* GeneratedMessage.swift in Sources */,
+				88BC599D1D05A91200BB73B2 /* PSChunk.swift in Sources */,
 				410F6B141D04A54C00535A1D /* WireFormat.swift in Sources */,
 				41D7471B1D049DE300AE9B53 /* Constants.swift in Sources */,
 				41D747231D04A1DC00AE9B53 /* Messages.proto.swift in Sources */,

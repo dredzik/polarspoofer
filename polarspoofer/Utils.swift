@@ -31,18 +31,6 @@ func hex20(data: [UInt8]) -> String {
     return result
 }
 
-func dp(data: [UInt8]) -> String {
-    var result = "packet"
-    result.appendContentsOf(" number=")
-    result.appendContentsOf(String(data[0] >> 4))
-    result.appendContentsOf(" flags=")
-    result.appendContentsOf(String(data[0] & 8))
-    result.appendContentsOf(String(data[0] & 4))
-    result.appendContentsOf(String(data[0] & 2))
-    result.appendContentsOf(String(data[0] & 1))
-    return result
-}
-
 func d2a(data: NSData) -> [UInt8] {
     var result = [UInt8](count: data.length, repeatedValue: 0)
     data.getBytes(&result, length: data.length)
@@ -97,58 +85,4 @@ func unknownDate() -> DateTime {
     let date = try! Date.Builder().setYear(1980).setMonth(0).setDay(0).build()
     let time = try! Time.Builder().setHour(0).setMinute(0).setSecond(0).setMilisecond(0).build()
     return try! DateTime.Builder().setDate(date).setTime(time).setTimezone(1).build()
-}
-
-func decode(message: [UInt8]) -> [UInt8] {
-    var i = 0, j = 0
-    var decoded = [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 304 != 0 }.dropFirst(2)
-    let length = Int(message[2])
-    return [] + decoded[0...length-1]
-}
-
-func encode(message: [UInt8]) -> [UInt8] {
-    let zeroed = [0x00, 0x00] + message + [0x00]
-    let parts = encodeParts(zeroed)
-    var result = [UInt8]()
-    
-    for part in parts {
-        for packet in encodePackets(part, last: parts.last! == part) {
-            result += packet
-        }
-    }
-    
-    return result
-}
-
-func encodeParts(message: [UInt8]) -> [[UInt8]] {
-    var count = UInt8(0)
-    var result = [[UInt8]]()
-    var left = message
-    
-    while left.count > 0 {
-        let remove = left.count > 303 ? 303 : left.count
-        result.append([count] + left[0...remove-1])
-        left.removeFirst(remove)
-        count += 1
-    }
-    
-    return result
-}
-
-func encodePackets(part: [UInt8], last: Bool) -> [[UInt8]] {
-    var result = [[UInt8]]()
-    var left = part
-    
-    var packet : UInt8 = 0
-    let packets = UInt8(ceil(Double(part.count) / 19.0))
-    
-    while left.count > 0 {
-        let remove = left.count > 19 ? 19 : left.count
-        packet += 1
-        let header : UInt8 = (packets - packet) << 4 + (result.count == 0 ? 8 : 0) + (!last || left.count > 19 ? 1 : 0)
-        result.append([header] + left[0...remove-1])
-        left.removeFirst(remove)
-    }
-    
-    return result
 }
