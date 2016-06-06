@@ -91,7 +91,11 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             print(SUCC, "recvm", type)
             sendp16()
         } else {
-            print(FAIL, "recvm", type, hex(message))
+            print(FAIL, "recvm", type, hex20(message))
+            if message.count > 4 && message[0] & 0x08 == 0x08 {
+                print(SUCC, "sendp", MessageType.Continue)
+                sendp([0x09, message[1]])
+            }
         }
     }
     
@@ -117,13 +121,18 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
 
         var response : [UInt8]
         
-        if path.hasSuffix("/") {
-            response = readDirectory(path)
-        } else {
-            response = readFile(path)
-        }
+        if request.types == .Read {
+            if path.hasSuffix("/") {
+                response = readDirectory(path)
+            } else {
+                response = readFile(path)
+            }
         
-        sendm(encode(response))
+            sendm(encode(response))
+        } else if request.types == .Write {
+            print(SUCC, "sendp", MessageType.Continue)
+            sendp([0x09, 0x00])
+        }
     }
     
     var packets = [[UInt8]]()
@@ -147,7 +156,6 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             return
         }
         
-        print(SUCC, "sendp16")
         let count = packets.count > 16 ? 16 : packets.count
         
         for _ in 0..<count {
@@ -156,13 +164,7 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
     
     public func sendp(packet: [UInt8]) {
-        var tmp = packet
-        
-        if packet.elementsEqual([0x00,0x00,0x00,0x00,0x00,]) {
-            tmp = [0x08,0x00,0x00,0x00,0x00,]
-        }
-        
-        p!.writeValue(a2d(tmp), forCharacteristic: c!, type: .WithoutResponse)
+        p!.writeValue(a2d(packet), forCharacteristic: c!, type: .WithoutResponse)
     }
 }
 

@@ -18,6 +18,31 @@ func hex(data: [UInt8]) -> String {
     return result + "]"
 }
 
+func hex20(data: [UInt8]) -> String {
+    var result = ""
+    
+    var left = data
+    while left.count > 0 {
+        let r = left.count > 20 ? 20 : left.count
+        result += "\n" + hex([] + left[0...r-1])
+        left.removeFirst(r)
+    }
+    
+    return result
+}
+
+func dp(data: [UInt8]) -> String {
+    var result = "packet"
+    result.appendContentsOf(" number=")
+    result.appendContentsOf(String(data[0] >> 4))
+    result.appendContentsOf(" flags=")
+    result.appendContentsOf(String(data[0] & 8))
+    result.appendContentsOf(String(data[0] & 4))
+    result.appendContentsOf(String(data[0] & 2))
+    result.appendContentsOf(String(data[0] & 1))
+    return result
+}
+
 func d2a(data: NSData) -> [UInt8] {
     var result = [UInt8](count: data.length, repeatedValue: 0)
     data.getBytes(&result, length: data.length)
@@ -76,7 +101,9 @@ func unknownDate() -> DateTime {
 
 func decode(message: [UInt8]) -> [UInt8] {
     var i = 0, j = 0
-    return [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 304 != 0 }.dropFirst(2).dropLast()
+    var decoded = [] + message.filter { _ in return i++ % 20 != 0 }.filter { _ in return j++ % 304 != 0 }.dropFirst(2)
+    let length = Int(message[2])
+    return [] + decoded[0...length-1]
 }
 
 func encode(message: [UInt8]) -> [UInt8] {
@@ -118,7 +145,7 @@ func encodePackets(part: [UInt8], last: Bool) -> [[UInt8]] {
     while left.count > 0 {
         let remove = left.count > 19 ? 19 : left.count
         packet += 1
-        let header : UInt8 = (packets - packet) << 4 + (!last || left.count > 19 ? 9 : 0)
+        let header : UInt8 = (packets - packet) << 4 + (result.count == 0 ? 8 : 0) + (!last || left.count > 19 ? 1 : 0)
         result.append([header] + left[0...remove-1])
         left.removeFirst(remove)
     }

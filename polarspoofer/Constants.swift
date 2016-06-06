@@ -16,6 +16,6 @@ struct Constants {
     }
 }
 
-let BackupRoot = "/Users/ak/.polar/backup/current"
+let BackupRoot = NSHomeDirectory().stringByAppendingString("/.polar/backup/current")
 let SUCC = "[+]"
 let FAIL = "[-]"
