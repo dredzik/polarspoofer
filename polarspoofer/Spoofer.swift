@@ -178,35 +178,5 @@ public class Spoofer : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     public func sendr(raw: [UInt8]) {
         p!.writeValue(a2d(raw), forCharacteristic: c!, type: .WithoutResponse)
     }
-    
-//    public func recvm(message: [UInt8]) {
-//            print(FAIL, "recvm", type, hex20(message))
-//            if message.count > 4 && message[0] & 0x08 == 0x08 {
-//                print(SUCC, "sendp", MessageType.Continue)
-//                sendp([0x09, message[1]])
-//            }
-//    }
-//    
-//    public func recvRequest(message: [UInt8]) {
-//        let decoded = decode(message)
-//        let request = try! Request.parseFromData(a2d(decoded))
-//        let path = BackupRoot + request.path
-//        print(SUCC, "recvm", MessageType.Request, request.types, path)
-//
-//        var response : [UInt8]
-//        
-//        if request.types == .Read {
-//            if path.hasSuffix("/") {
-//                response = readDirectory(path)
-//            } else {
-//                response = readFile(path)
-//            }
-//        
-//            sendm(encode(response))
-//        } else if request.types == .Write {
-//            print(SUCC, "sendp", MessageType.Continue)
-//            sendp([0x09, 0x00])
-//        }
-//    }
 }
 
