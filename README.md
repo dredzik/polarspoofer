@@ -3,7 +3,7 @@
 #### Polar M400 watch spoofer
 
 I wrote this project to fool around with the Polar Flow app. It pretends to be a Polar M400 watch in order
-to listen to watch <-> app communication. 
+to listen to communication between the app and the device. 
 
 #### Compile
 
